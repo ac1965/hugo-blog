@@ -1,0 +1,4 @@
+[submodule "themes/anatole-ext"]
+	path = themes/anatole-ext
+	url = https://github.com/ac1965/anatole-ext
+	branch = master
