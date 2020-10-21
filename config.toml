@@ -1,3 +1,10 @@
-baseURL = "http://example.org/"
-languageCode = "en-us"
-title = "My New Hugo Site"
+baseURL = "https://www.ty07.net"
+languageCode = "ja-jp"
+title = "Not Good Father"
+theme = "anatole-ext"
+
+[Params]
+author = "ac1965"
+copyright = "2009-2020"
+subtitle = "The sound, old pond and frog jump into water."
+logo = "/images/logo.jpg"
