@@ -1,0 +1,165 @@
+---
+title: "New PC 2"
+date: 2010-02-08T23:27:24+09:00
+draft: false
+tags: ["linux"]
+---
+[前のポスト](/blog/new-pc.html)の環境から気分転換にディスクフォーマットをしました。
+元々の用途が Live CD作成マシンなのでベースのイメージは
+squashfs でできているので、移行は楽ちんなのだ。
+
+まずはパーティションレイアウトはこんな感じ。
+今回は、LVM2+LUKS で。
+
+* fdisk -l /dev/sdc
+
+``` bash
+Disk /dev/sdc: 160.0 GB, 160041885696 bytes
+255 heads, 63 sectors/track, 19457 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+Disk identifier: 0x1b155f8d
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdc1               1        9436    75794638+  83  Linux
+/dev/sdc2            9437       19457    80493682+  83  Linux
+```
+
+* /etc/fstab
+
+``` bash
+LABEL=BOOT		/boot		ext4		noauto,noatime	1 2
+LABEL=SWAP		none		swap		sw		0 0
+LABEL=ROOT		/		ext4		noatime		0 1
+/dev/cdrom		/mnt/cdrom	auto		noauto,ro	0 0
+```
+
+ターゲットは /dev/sdc2 で。/dev/sdc1は Windows で[FreeOTFE](http://www.freeotfe.org/)(LUKS+NTFS)
+を使って利用しているのだ。
+[TRUE CRYPT](http://www.truecrypt.org/)でディスク丸ごとでも
+よかったんですが、面倒なので。とはいえ、Windowsは pre-install のままな
+のでどうでもいいんです。
+訳ありなファイルは
+[Dekart Private Disk](http://www.private-disk.net/)
+でイメージを作ってポータブルに使っている。便利だね。
+
+以下、めも。
+
+1.  cryptsetup -y -c ENCRYPTED_METHOD -s SIZE luksFormat
+    /dev/sdc2
+\* ENCRYPTED_METHOD: /proc/crypto をみてね。
+
+3.  cryptsetup luksOpen /dev/sdc2 MAP_NAME
+\* MAP_DEVICE: /dev/mapper/MAP_NAME
+
+5.  外部鍵ファイルの作成
+ディスク本体側の鍵は削除した方(luksDelKey)がよい。私はしていないけど :-)
+
+``` bash
+dd if=/dev/urandom of=/boot/keyfile bs=1 count=1024
+cryptsetup luksAddKey /dev/sdc2 /boot/keyfile
+cryptsetup luksDump /dev/sdc2 (キーファイルが登録されているかを確認)
+cryptsetup luksClose MAP_NAME
+cryptsetup luksOpen /dev/sdc2 --key-file /boot/keyfile
+cryptsetup luksDelKey /dev/sdc2 1 (ディスク側本体の鍵がslot1の場合)
+```
+
+8.  pvcreate MAP_DEVICE
+9.  vgcreate VOL_NAME MAP_DEVICE
+\* LVMの単一ボリューム VOL_NAME を作成
+
+11.  lvcreate
+lvcrete コマンドで swapとか rootパーティションを作成
+
+``` bash
+lvcreate -n swap VOL_NAME -L SIZE
+lvcreate -n root VOL_NAME -L SIZE
+'''
+
+14.  lvchange -ay VOL_NAME
+15.  swapを作成
+
+``` bash
+mkswap -L SWAP /dev/mapper/VOL_NAME-swap
+```
+
+17.  rootを作成
+
+``` bash
+mkfs.ext4 -j /dev/mapper/VOL_NAME-root -L ROOT
+```
+
+19.  bootを作成
+実際は作成していない。前のもの(/dev/sde1)を流用している。
+
+<pre class="brush: text;">
+mkfs.ext4 -j /dev/BOOTDEVICE -L BOOT
+</pre>
+22.  作成済みの squashfs から展開
+
+``` bash
+mount -t squashfs -o loop,ro /HOGE/BACKUP-IMAGE /mnt/BACKUP
+mount -t squashfs -o loop,ro /HOGE/SQUASHFS-IMAGE /mnt/FROM
+mount /dev/mapper/VOL_NAME-root /mnt/TO
+cd /mnt/TO
+rsync -avt /mnt/FROM/. .
+rsync -avt /mnt/BACKUP/. .
+```
+
+で、eix-sync; emerge -uNDav @world
+
+Grub(grub-static 0.97-r9)
+
+``` bash
+# http://www.gentoo.org/doc/en/handbook/handbook-x86.xml?part=1&chap=10#doc_chap2
+# If you are not using Genkernel and you need help creating this file, you
+# should consult the handbook. Alternatively, consult the grub.conf.sample that
+# is included with the Grub documentation.
+
+default 0
+timeout 30
+password --md5 $1$jBaL5/$pIpowSTX5ip2pDXllzSd90
+
+title=Gentoo Linux (2.6.31-pentoo-r3) LUKS AND LVM2
+root (hd0,0)
+kernel /boot/kernel-genkernel-x86-2.6.31-pentoo-r3 \
+       root=/dev/ram0 \
+       crypt_root=/dev/sdc2 \
+       root_key=keyfile root_keydev=/dev/sde1 \
+       dolvm \
+       real_root=/dev/mapper/vg-root \
+       ramdisk=8192 quiet CONSOLE=/dev/tty1 \
+       resume=swap:/dev/mapper/vg-swap init=/linuxrc
+
+initrd /boot/initramfs-genkernel-x86-2.6.31-pentoo-r3
+
+# -- Backtrack4
+title BT-4
+root (hd0,0)
+kernel /boot/bt4/vmlinuz  BOOT=casper boot=casper persistent rw quiet
+
+initrd /boot/bt4/initrd.gz
+
+title=USB stick Pentoo
+root (hd0,0)
+kernel /boot/kernel-genkernel-x86-2.6.31-pentoo-r3 \
+    root=/dev/ram0 cdroot aufs \
+    init=/linuxrc max_loop=256 nokeymap \
+    looptype=squashfs loop=/image/root-20100207.squashfs
+
+initrd /boot/initramfs-genkernel-x86-2.6.31-pentoo-r3
+
+#    root=/dev/ram0 cdroot aufs changes=/dev/sdd2 \
+
+title grub-install
+lock
+install (hd0,0)/boot/grub/stage1 d (hd0) (hd0,0)/boot/grub/stage2 p (hd0,0)/boot/grub/grub.conf
+
+title Other Operating System - Microsoft Windows XP
+lock
+    rootnoverify (hd0,0)
+    makeactive
+    chainloader +1
+
+# vim:ft=conf:
+```

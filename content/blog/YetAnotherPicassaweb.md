@@ -1,0 +1,149 @@
+---
+title: "Yet Another Picassaweb"
+date: 2010-02-11T15:14:00+09:00
+tags: ["picasaweb", "python", "googlecode", "mobilephone"]
+draft: false
+---
+たいそうなタイトルをつけてしまったが、そんな大したことではない。
+
+ケータイは Nokia N82 を使っているが、写真は Googleさんに置いている。
+Picassaを使ってアップは面倒だったのでスクリプトを作っておいたのだが
+`git add' していなかったのでディスク初期化で捨ててしまった。仕方がないので作り直し。
+
+なにかのために、めも。
+
+## インストール
+
+* [Gdata](http://code.google.com/p/gdata-python-client/) をインストールしておく。(`emerge dev-python/gdata')
+* linux-box とペアリングをさせて obexfs でケータイと繋ぐ。
+
+``` bash
+$ hcitool scan
+Scanning ...
+         00:1D:FD:91:A8:12      NOKIA N82
+$ simple-agent
+Agent registered
+
+$ cat obexfs.sh
+#! /bin/sh
+
+bt="00:1D:FD:91:A8:12"
+test -d ~/mnt/n82 || mkdir -p ~/mnt/n82
+obexfs -b $bt ~/mnt/n82
+$ ./obexfs.sh
+```
+
+* ケータイから画像だけ取り出して削除する。
+
+``` bash
+#! /bin/sh
+
+test -d $HOME/mnt/n82/E\:/Images || exit 1
+test -d $HOME/images || mkdir -p $HOME/images
+
+for f in `find $HOME/mnt/n82/E\:/Images -name "*.jpg"`
+do
+	echo - $f
+	target=`basename $f |cut -b1-6`
+	test -d $HOME/images/$target || mkdir -p $HOME/images/$target
+	cp $f $HOME/images/$target && rm -f $f
+done
+```
+
+* 画像を Google さんアップする。
+
+``` bash
+$ python picasaweb.py -e EMAIL -p PASSWORD -a FOO -d ~/images/FOO
+```
+
+``` python
+#! /usr/bin/python
+# -*- coding: utf-8 -*-
+
+import imp
+import optparse
+import sys
+import os
+
+description = ""
+usage = "Usage: picaweb.py --email=EMAIL_ADDRESS --password=PASSWD --album=ALBUM --dirs=UPLOAD"
+parser = optparse.OptionParser(description=description, usage=usage)
+
+parser.add_option("-e", "--email",
+                  dest="email_address",
+                  help="Picasa access email-address",
+                  metavar="EMAIL_ADDRESS")
+parser.add_option("-p", "--password",
+                  dest="password",
+                  help="Picasa access password",
+                  metavar="PASSWORD")
+parser.add_option("-a", "--album",
+                  dest="album",
+                  help="album name",
+                  metavar="ALBUM")
+parser.add_option("-d", "--dirs",
+                  dest="directory",
+                  help="upload target directory",
+                  metavar="DIRECTORY")
+
+opts, pargs = parser.parse_args(args=sys.argv[1:])
+
+#if len(pargs) < 2:
+#    parser.error("missing required args")
+
+email = opts.email
+password = opts.password
+album_name = opts.album
+target_dirs = opts.dirs
+
+import gdata.photos.service
+import gdata.media
+import gdata.geo
+
+def main():
+    gd_client = gdata.photos.service.PhotosService()
+    gd_client.email = email
+    gd_client.password = password
+    gd_client.source = 'Picasa-AutoUploadApp'
+    print u'Picasaへのログインを開始します。(%s/%s)' % (email, password)
+    gd_client.ProgrammaticLogin()
+
+    filepath = []
+    for root, dirs, files in os.walk(target_dirs):
+        for f in files:
+            if (f.endswith(".JPG") or f.endswith(".jpg")):
+                filepath.append ((os.path.join(root, f), f))
+
+    albums = gd_client.GetUserFeed(user=email)
+    match = 0
+    for a in albums.entry:
+        if (album_name == a.title.text):
+            match = 1
+            target_id = a.gphoto_id.text
+            break
+
+    if match:
+        print u'既存アルバム %s に追加' % target
+    else:
+        print u'新規アルバム %s を作成' % target
+        new_album = gd_client.InsertAlbum(title=album_name, summary='')
+        target_id = new_album.gphoto_id.text
+
+
+    album_url = "/data/feed/api/user/default/albumid/%s" % (target_id)
+    print u'URL:%s' % album_url
+    for (i,(photo_path, photo_name)) in enumerate(filepath):
+        print u'(%i/%i) %s .. uploading ...' % (i+1,
+                                                len(filepath),
+                                                photo_name
+                                                )
+        gd_client.InsertPhotoSimple(album_url, photo_name,
+                                    '',
+                                    photo_path,
+                                    content_type="image/jpeg"
+                                    )
+
+
+if __name__ == '__main__':
+    sys.exit(main())
+```
