@@ -1,6 +1,6 @@
 ---
-title: "about"
-date: 2015-04-28:11:49+09:00
+title: "About"
+date: 2015-04-28T11:49:41+09:00
 draft: false
 tags: ["about"]
 ---

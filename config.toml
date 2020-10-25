@@ -1,10 +1,33 @@
 baseURL = "https://www.ty07.net"
-languageCode = "ja-jp"
 title = "Not Good Father"
+author = "ac1965"
+copyright = "Copyright © 2009–2020, YAMASHITA Takao; all rights reserved."
+languageCode = "ja"
+DefaultContentLanguage = "ja"
 theme = "anatole-ext"
 
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    identifier = "archive"
+    name = "Archive"
+    url = "/blog/"
+    weight = 2
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 3
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 4
+
 [Params]
-author = "ac1965"
-copyright = "2009-2020"
 subtitle = "The sound, old pond and frog jump into water."
 logo = "/images/logo.jpg"

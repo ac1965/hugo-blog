@@ -79,11 +79,12 @@ crossdev で作ったクロスコンパイラで基本システム(stage1)を構
 ```
 
 * 参考：/usr/armv5tel-softfloat-linux-gnueabi/etc/make.conf
+
 僕の環境なので同じである必要はない。
 ROOT="..." の default は "/" なので指定しておかないとoverwrite されるので注意
 あと、クロスコンパイルの場合 CBUILD は必要。
 
-```
+``` script
 # NEVER change this
 CHOST="armv5tel-softfloat-linux-gnueabi"
 CBUILD=i686-pc-linux-gnu
