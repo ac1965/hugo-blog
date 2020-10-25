@@ -6,7 +6,7 @@ tags: ["linux", "xorg"]
 ---
 GuruPlugがなかなか屆かないので、Funtoo と xorg-1.8 の整理をした。
 
-* boot-update
+# boot-update
 
 grubの設定支援かな？
 [boot-update](http://www.funtoo.org/en/funtoo/core/boot/)
@@ -46,18 +46,18 @@ boot {
 }
 ```
 
-* xorg-1.8
+# xorg-1.8
 
 けっこう放置していたのでトライしてみた。
 
-**  MASKを外す
+##  MASKを外す
 
 ``` bash
 echo 'x11-base/xorg-server' >> /etc/portage/package.unmask
 echo 'x11-base/xorg-server * ~* **' >> /etc/portage/package.keywords/x11-base
 ```
 
-** emege xorg-server
+## emege xorg-server
 
 USE="udev -hal" で emerge したけど、キーボードとマウスが認識していない。予想はついていたので、sshd
 をあげて別端末から
@@ -66,7 +66,7 @@ pkill
 
 [ここを参考](http://body0r.wordpress.com/2010/04/16/xorg-udev-toggle/)する。
 
-** emerge udev
+## emerge udev
 
 MASKを外して、udev をアップデート。
 
@@ -76,7 +76,7 @@ echo 'sys-fs/udev * ~* **' >> /etc/portage/package.keywords/sys-fs
 emerge -u udev
 ```
 
-** udevルールの追加
+## udevルールの追加
 j
 /usr/share/X11/xorg.conf.d
 が system config なので、/etc/X11/xorg.conf.d を掘って
