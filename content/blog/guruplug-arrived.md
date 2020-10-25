@@ -21,7 +21,7 @@ draft: false
 
 ## JTAG ボード [^1] を繋ぎ、FTDI USB シリアルデバイス(例では ttyUSB0)を確認したら
 
-```
+``` bash
 usb 2-2: FTDI USB Serial Device converter now attached to <font color="red">ttyUSB0
 ```
 
@@ -30,7 +30,7 @@ usb 2-2: FTDI USB Serial Device converter now attached to <font color="red">ttyU
 [^1]: 先行予約は JTAGボードが無料でついてくるんだけど、PC-BOX と繋げるためには JTAGボードが必需なんだな。後発で買った人は工作するか、諦めるか。もっとも必要のない人だっているから、どうだとは言い切れないが。
 
 * U-Bootの確認
-```
+``` bash
 U-Boot 2009.11-rc1-00602-g8e6db3d (Dec 24 2009 - 03:11:17)
 Marvell-Plug2
 
@@ -120,7 +120,7 @@ Environment size: 455/131068 bytes
 
 いい感じの速度感。悪くないな。
 
-```
+``` bash
 U-Boot 2009.11-rc1-00602-g8e6db3d (Dec 24 2009 - 03:11:17)
 Marvell-Plug2
 

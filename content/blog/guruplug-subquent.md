@@ -22,6 +22,7 @@ wiki にあることで十分。Gentoo RFS については、感単なのは sta
 ## 進行形
 
 * Pyblosxom + Paste + Nginx
+
 python アプリ関係ソフトの、KEYWORD が "arm" または "~arm" がついていないでやんの。
 
 KEYWORD を無効にしてから、Nginx をインストールして、動作するまでは確認した。
@@ -36,6 +37,7 @@ Apache + mod_wsgi + Pyblosxom で現在は動作している。[2010-07-19]
 ## 将来
 
 * HoneyPod の実装
+
 GuruPlug でのアイデアソリューションとして、
 やりたいことは HoneyPod の実装なんだな。体感的に、そんなに遅いマシンではないので期待しちゃっているのだが、
 Nginx が上手く動作していないので期待は遠い。
@@ -57,7 +59,8 @@ iptables は問題なく動作した。honeyd も動作した。
 ## 現在の GuruPlug Std.
 
 * U-Boot
-```
+
+``` bash
 U-Boot 2010.03-01266-g42f7128 (Jul 14 2010 - 10:09:06)
 Marvell-GuruPlug
 
@@ -191,7 +194,8 @@ Device Tree:
 ```
 
 * Kernel Boot
-```
+
+``` bash
 U-Boot 2010.03-01266-g42f7128 (Jul 14 2010 - 10:09:06)
 Marvell-GuruPlug
 

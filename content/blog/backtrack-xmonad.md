@@ -31,11 +31,11 @@ main = xmonad $ kdeConfig
    myOtherFloats = ["alsamixer"]
    webApps       = ["Firefox-bin", "Opera"] -- open on desktop 2
    ircApps       = ["Ksirc"]                -- open on desktop 3
-</pre>
+```
+
 * 設定
 
-<pre class="brush: shell;">
-
+``` bash
 # apt-get install language-pack-ja
 # apt-get install scim scim-anthy kasumi
 # apt-get install ttf-vlgothic
