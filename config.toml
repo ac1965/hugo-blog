@@ -2,8 +2,9 @@ baseURL = "https://www.ty07.net"
 title = "Not Good Father"
 author = "ac1965"
 copyright = "Copyright © 2009–2020, YAMASHITA Takao; all rights reserved."
-languageCode = "ja"
 DefaultContentLanguage = "ja"
+languageCode = "ja-jp"
+pagenate = "10"
 theme = "anatole-ext"
 
 [menu]
