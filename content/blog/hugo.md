@@ -17,8 +17,12 @@ $ brew update
 $ brew install hugo
 ```
 
+テーマは、conao3さんの [anatole-ext](https://github.com/conao3/anatole-ext) にした。
+
 ``` bash
 $ hugo new site hoge
+$ cd hoge
+$ git clone https://github.com/conao3/anatole-ext themes/anatole-ext
 ```
 
 これで hoge ディレクトリーが作成され、その配下に雛形が作成される。
