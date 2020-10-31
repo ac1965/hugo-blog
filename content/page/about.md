@@ -3,7 +3,7 @@ title: "about"
 date: 2015-04-28 11:40:29
 draft: false
 ---
-![らびぃちゃん](/images/logo.jpg)
+![who are you?](/images/about.jpg)
 
 ## リンク
 
