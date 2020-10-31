@@ -10,7 +10,7 @@ tags: ["hugo"]
 
 ## インストール
 
-Homebrew がインストール済みとして、
+[Homebrew](https://brew.sh/index_ja) がインストール済みとして、
 
 ``` bash
 $ brew update
@@ -23,6 +23,7 @@ $ brew install hugo
 $ hugo new site hoge
 $ cd hoge
 $ git clone https://github.com/conao3/anatole-ext themes/anatole-ext
+$ hugo new posts/first-article.md
 ```
 
 これで hoge ディレクトリーが作成され、その配下に雛形が作成される。
@@ -30,10 +31,11 @@ $ git clone https://github.com/conao3/anatole-ext themes/anatole-ext
 自分のサイトなので、ここは簡単に戻せることを前提に、GitPagesを使うことにする。
 
 ``` bash
-$ git clone https://github.com/ac1965/hugo-git.git
+$ git clone git@github.com:ac1965/hugo-blog.git ./hugo-blog
 $ cd hugo-git
 $ git submodule init
 $ git submodule update
+$ hugo
 ```
 
 hugo コマンドで、publicディレクトリ下にコンテンツが生成される。
