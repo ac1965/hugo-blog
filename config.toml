@@ -1,7 +1,7 @@
 baseURL = "https://www.ty07.net"
 title = "Not Good Father"
-author = false
-copyright = "Copyright © 2009–2020, YAMASHITA Takao; all rights reserved."
+author = "YAMASHITA Takao"
+copyright = "&copy; 2009-2020. All rights reserved."
 DefaultContentLanguage = "ja"
 languageCode = "ja-jp"
 pagenate = "10"
