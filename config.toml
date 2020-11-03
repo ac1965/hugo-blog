@@ -6,6 +6,10 @@ DefaultContentLanguage = "ja"
 languageCode = "ja-jp"
 pagenate = "10"
 theme = "anatole-ext"
+enableEmoji = true
+enableInlineShortcodes = true
+enableGitInfo = true
+hasCJKLanguage = true
 
 [menu]
   [[menu.main]]

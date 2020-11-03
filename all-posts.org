@@ -2788,7 +2788,9 @@ agent.pwy にリネームして、自動起動できるようにしておく。
    :CUSTOM_ID: hexo-から-hugo
    :END:
 サイトジェネレータを [[https://https://gohugo.io][Hugo]] に変えてみた。
-インストールといっても、homebrew を使うので簡単ですが :-)
+インストールといっても、homebrew を使うので簡単ですが :grin:
+
+[[https://www.webfx.com/tools/emoji-cheat-sheet/][EMOJI-CHEAT-SHEET]]
 *** インストール
    :PROPERTIES:
    :CUSTOM_ID: インストール
