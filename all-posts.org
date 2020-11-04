@@ -2812,7 +2812,7 @@ agent.pwy にリネームして、自動起動できるようにしておく。
 **** 展開
 #+BEGIN_SRC sh
   $ git clone git@github.com:ac1965/hugo-blog.git ./hugo-blog
-  $ cd hugo-git
+  $ cd hugo-blog
   $ git submodule init
   $ git submodule update
   $ git submodule foreach git pull origin master
