@@ -1,7 +1,7 @@
 #! /bin/bash
 
-hugo=~/devel/src/github.com/ac1965/hugo-blog
-public=~/devel/src/github.com/ac1965/ac1965.github.io
+hugo=~/devel/repos/hugo-blog
+public=~/devel/repos/ac1965.github.io
 
 abort ()
 {
