@@ -441,7 +441,8 @@ add'
 :CUSTOM_ID: インストール
 :END:
 
-- [[http://code.google.com/p/gdata-python-client/][Gdata]]
+-
+  [[http://code.google.com/p/gdata-python-client/][Gdata]]
   をインストールしておく。(`emerge dev-python/gdata')
 - linux-box とペアリングをさせて obexfs でケータイと繋ぐ。
 
@@ -2830,36 +2831,21 @@ hugo-blog、公開用は ac1965.github.com で分けている。
   hugo=~/devel/src/github.com/ac1965/hugo-blog
   public=~/devel/src/github.com/ac1965/ac1965.github.io
 
-  abort ()
-  {
-      echo -e "\033[1;30m>\033[0;31m>\033[1;31m> ERROR:\033[0m${@}\n" && exit
-  }
+oが最近のお気に入りだ。
+** TODO iPhone 12 Pro
+:PROPERTIES:
+:EXPORT_FILE_NAME: 2020-4b4f-83fe
+:EXPORT_DATE:
+:EXPORT_HUGO_TAGS: iphone
+:EXPORT_HUGO_CATEGORIES:
+:EXPORT_HUGO_LASTMOD:
+:END:
+変え替え時ということで、iPhone を 8plus から 12pro に機種変更をした。
+8plus からの変更で大きいのは顔認証に変わったことだが、それよりも少しだけ小さいのだが、いい感じ。
+一通りアプリの復元、Walletの復元をした。
+一番面倒だったのが、なんとかPay系のアプリ。これは再認証を必要とするものがあったから。
 
-  info ()
-  {
-      echo -e "\033[1;30m>\033[0;36m>\033[1;36m> \033[0m${@}\n"
-  }
-
-  warn ()
-  {
-      echo -e "\033[1;30m>\033[0;33m>\033[1;33m> \033[0m${@}\n"
-  }
-
-  test -d ${hugo} && cd ${hugo} || abort "${hogo} directory not found."
-  # clean public
-  rm -fr public
-
-  info "Deploying updates to GitHub..."
-
-  # Build the project.
-  hugo # if using a theme, replace with `hugo -t <YOURTHEME>`
-
-  # Go To Public folder
-  test -d ${public} && cd ${public} || exit
-  info "rsync.."
-  rsync -at --delete --exclude=".git" ${hugo}/public/. .
-
-  # Add changes to git.
-  git add .
-  git commit -avm "update:$(env LANG=C date)" && git push
-#+END_SRC
+- 箱から開けた
+  [[/images/1st-shot.png]]
+- PCだけの光
+  [[/images/2nd-shot.png]]
