@@ -2831,11 +2831,10 @@ hugo-blog、公開用は ac1965.github.com で分けている。
   hugo=~/devel/src/github.com/ac1965/hugo-blog
   public=~/devel/src/github.com/ac1965/ac1965.github.io
 
-oが最近のお気に入りだ。
-** TODO iPhone 12 Pro
+** DONE iPhone 12 Pro
 :PROPERTIES:
 :EXPORT_FILE_NAME: 2020-4b4f-83fe
-:EXPORT_DATE:
+:EXPORT_DATE: 2020-11-15 08:53:00
 :EXPORT_HUGO_TAGS: iphone
 :EXPORT_HUGO_CATEGORIES:
 :EXPORT_HUGO_LASTMOD:
