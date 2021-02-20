@@ -1,7 +1,7 @@
 ---
 title: "What Blog?"
 date: 2016-06-18T11:14:00+09:00
-lastmod: 2021-02-20T17:00:47+09:00
+lastmod: 2021-02-20T17:04:43+09:00
 tags: ["tweet"]
 draft: false
 ---
