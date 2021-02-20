@@ -2848,3 +2848,16 @@ hugo-blog、公開用は ac1965.github.com で分けている。
   [[/images/1st-shot.png]]
 - PCだけの光
   [[/images/2nd-shot.png]]
+
+** DONE 不要不急
+:PROPERTIES:
+:EXPORT_FILE_NAME: 2021-3072-328a
+:EXPORT_DATE: 2021-02-20 16:43:00
+:EXPORT_HUGO_TAGS: covid-19
+:EXPORT_HUGO_CATEGORIES:
+:EXPORT_HUGO_LASTMOD:
+:END:
+
+人にとって必要なエクスペリエンスは、不要不急の中で生まれるものが多いと思う。
+
+不要不急を抑止されているコロナ禍の中で、人は豊かな生活を求めることができるのだろうか。
