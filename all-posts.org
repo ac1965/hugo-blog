@@ -4,7 +4,7 @@
 
 #+category: blogger_hugo
 #+startup: contents align shrink
-#+options: AUTHOR:nil
+#+options: AUTHOR:nil H:6 toc:nil
 #+hugo_base_dir: ./
 #+hugo_auto_set_lastmod: t
 #+hugo_section: blog
